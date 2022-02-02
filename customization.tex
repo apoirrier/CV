@@ -1,0 +1,98 @@
+% Linkedin
+\newcommand{\givencvlinkedin}{}
+\newcommand{\cvlinkedin}[1]{\renewcommand{\givencvlinkedin}{#1}}
+
+% Skills
+\renewcommand{\skills}[1]{\renewcommand{\givenskill}{#1}}
+\newcommand{\skillsection}[1]{~\\[.2cm]{\noindent\large #1}}
+
+% Enable French
+\newcommand{\skillheader}{\profilesection{Skill}{5cm}}
+\iflanguage{french}{\renewcommand{\skillheader}{\profilesection{Compétences}{1.9cm}}}{}
+\newcommand{\aboutmeheader}{\profilesection{About me}{3.2cm}}
+\iflanguage{french}{\renewcommand{\aboutmeheader}{\profilesection{\`A propos}{3.4cm}}}{}
+
+%% Profile section
+\newgeometry{left=8.5cm,top=0.1cm,right=1cm,bottom=0.2cm,nohead,nofoot}
+\renewcommand{\makeprofile}
+{
+  % grey bar on the left side
+  \begin{tikzpicture}[remember picture,overlay]
+      \node [rectangle, fill=asidecolor, anchor=north, minimum width=9.90cm, minimum height=\paperheight+1cm] (box) at (-5cm,0.5cm){};
+  \end{tikzpicture}
+
+  \begin{textblock}{7.5}(0.5, 0.2)
+    \begin{flushleft}
+      \hspace{13pt}
+
+      \begin{center}
+        % profile picture
+        \ifthenelse{\equal{\givenprofilepic}{}}{}{\begin{tikzpicture}[x=\imagescale,y=-\imagescale]
+            \clip (600/2, 567/2) circle (567/2);
+            \node[anchor=north west, inner sep=0pt, outer sep=0pt] at (0,0) {\includegraphics[width=\imagewidth]{\givenprofilepic}};
+        \end{tikzpicture}}
+
+        % name
+        {\Huge\color{mainblue}\givencvname}
+      \end{center}
+
+      % jobtitle
+      \begin{flushright}
+        {\Large\color{black!80}\givencvjobtitle}
+      \end{flushright}
+      \renewcommand{\arraystretch}{1.6}
+
+      % table with icons 
+      \begin{tabular}{c @{\hskip 0.2cm} p{5cm}}
+        % CV date
+        \ifthenelse{\equal{\givencvdate}{}}{}{\textsc{\Large\icon{\Info}} & \givencvdate\\}
+        % CV address
+        \ifthenelse{\equal{\givencvaddress}{}}{}{\textsc{\Large\icon{\Letter}} & \givencvaddress\\}
+        % CV phone
+        \ifthenelse{\equal{\givennumberphone}{}}{}{\textsc{\Large\icon{\Telefon}} & \givennumberphone\\}
+        % CV site
+        \ifthenelse{\equal{\givencvsite}{}}{}{\textsc{\Large\icon{\Mundus}} & \href{\givencvsite}{\textcolor{cerulean}\givencvsite}\\}
+        % CV mail
+        \ifthenelse{\equal{\givencvmail}{}}{}{\textsc{\large\icon{@}} & \href{mailto:\givencvmail}{\givencvmail}\\}
+        % CV linkedin
+        \ifthenelse{\equal{\givencvlinkedin}{}}{}{\textsc{\large\icon{\faLinkedin}} & \href{\givencvlinkedin}{\textcolor{cerulean}\givencvlinkedin}}
+      \end{tabular}
+
+      % about me text
+      \aboutmeheader~\\
+      \givenaboutme
+
+      % skills with scale
+      \skillheader
+      \givenskill
+    \end{flushleft}
+  \end{textblock}
+  \vspace{-10pt}
+}
+
+%% Section style
+\renewcommand{\section}[1]
+{
+  \par%
+  {%
+    \LARGE
+    \color{headercolor}%
+    \round{#1}{%
+      \ifodd\value{colorCounter}%
+        mainblue%
+      \else%
+        maingray%
+      \fi%
+    }%
+  }
+  \stepcounter{colorCounter}%
+  \par\vspace{\parskip}
+}
+
+\renewcommand{\twentyitem}[4]{
+  \begin{tabular}{l @{\hskip 0.2cm} p{9cm} @{\hskip 0.2cm} r}
+    #1 & #2 & \footnotesize#3 \\
+    & #4 & 
+  \end{tabular}
+  ~\\\vspace{\parsep}
+}
