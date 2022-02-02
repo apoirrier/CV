@@ -1,3 +1,6 @@
+\usepackage{multirow}
+\usepackage{array}
+
 % Linkedin
 \newcommand{\givencvlinkedin}{}
 \newcommand{\cvlinkedin}[1]{\renewcommand{\givencvlinkedin}{#1}}
@@ -89,10 +92,18 @@
   \par\vspace{\parskip}
 }
 
-\renewcommand{\twentyitem}[4]{
-  \begin{tabular}{l @{\hskip 0.2cm} p{9cm} @{\hskip 0.2cm} r}
-    #1 & #2 & \footnotesize#3 \\
-    & #4 & 
+\renewcommand{\twentyitem}[6]{
+  \begin{tabular}{p{2cm} >{\raggedright\arraybackslash}m{8.5cm} p{2cm}}
+    #1 - & \multirow{2}{*}{#3} & \multicolumn{1}{r}{\footnotesize#4} \\
+    #2 & & \multicolumn{1}{r}{\footnotesize#5} \\
+    & \begin{tabular}{p{8.5cm}}#6\end{tabular} & \\
   \end{tabular}
   ~\\\vspace{\parsep}
+}
+
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\twentyitemshort}[2]{%
+  \hspace{5pt}#1&\parbox[t]{11cm}{%
+    \textbf{#2}%
+  }\\%
 }
